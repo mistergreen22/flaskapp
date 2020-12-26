@@ -41,14 +41,13 @@ def get_users():
     return response
 
 
-@app.route('/get/user/', methods=['GET'])
-def get_user_by_id():
-    user_id = request.args['id']
+@app.route('/get/user/<int:get_id>', methods=['GET'])
+def get_user_by_id(get_id):
     con = sqlite3.connect('database.db')
     con.row_factory = sqlite3.Row
 
     cur = con.cursor()
-    cur.execute('SELECT * FROM users where id = ?', user_id)
+    cur.execute('SELECT * FROM users where id = ?', str(get_id))
 
     rows = cur.fetchall()
 
