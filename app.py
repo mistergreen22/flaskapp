@@ -77,13 +77,12 @@ def update_user_by_id():
     return 'ok'
 
 
-@app.route('/delete/user', methods=['DELETE'])
-def delete_user_by_id():
-    user_id = request.args['id']
+@app.route('/delete/user/<int:del_id>', methods=['DELETE'])
+def delete_user_by_id(del_id):
     try:
         with sqlite3.connect('database.db') as con:
             cur = con.cursor()
-            cur.execute('DELETE from users WHERE id = ?', user_id)
+            cur.execute('DELETE from users WHERE id = ?', str(del_id))
             con.commit()
     except:
         con.rollback()
