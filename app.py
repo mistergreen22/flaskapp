@@ -56,9 +56,8 @@ def get_user_by_id():
     return response
 
 
-@app.route('/update/user', methods=['PUT'])
-def update_user_by_id():
-    user_id = request.args['id']
+@app.route('/update/user/<int:upd_id>', methods=['PUT'])
+def update_user_by_id(upd_id):
     new_name = request.json['name']
     new_surname = request.json['surname']
     new_address = request.json['address']
@@ -67,7 +66,7 @@ def update_user_by_id():
             cur = con.cursor()
             cur.execute('UPDATE users SET name = ?, surname = ?, address = ?'
                         ' WHERE id = ?',
-                        (new_name, new_surname, new_address, user_id))
+                        (new_name, new_surname, new_address, str(upd_id)))
             con.commit()
     except:
         con.rollback()
